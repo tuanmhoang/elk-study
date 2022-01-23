@@ -1,2 +1,0 @@
-# elk-study
-Study ELK
