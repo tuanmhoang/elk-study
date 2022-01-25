@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface EventsController {
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAllEvents();
+    ResponseEntity<List<Event>> getAllEvents();
 
     @PostMapping
-    public void createEvent(@RequestBody CreateEventRequest request);
+    void createEvent(@RequestBody CreateEventRequest request);
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<List<Event>> searchByTitle(@PathVariable String title);
+    ResponseEntity<List<Event>> searchByTitle(@PathVariable String title);
 
     @GetMapping("/title/{title}/after/{date}")
-    public ResponseEntity<List<Event>> searchByTitleAndDateTimeAfter(@PathVariable String title,
+    ResponseEntity<List<Event>> searchByTitleAndDateTimeAfter(@PathVariable String title,
         @PathVariable @DateTimeFormat(pattern = AppConstants.YYYY_MM_DD) LocalDate date);
 }

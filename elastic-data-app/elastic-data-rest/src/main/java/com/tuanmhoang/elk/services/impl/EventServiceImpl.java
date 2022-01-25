@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class EventServiceImpl implements EventService {
 
     private static final String SEARCH_ENDPOINT = "/_search";
@@ -33,7 +35,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getAllEvents() {
-        Request searchRequest = new Request("GET", indexName + Action.SEARCH.getType());
+        log.info("Getting all events");
+        Request searchRequest = new Request("GET", indexName + SEARCH_ENDPOINT);
         return performRequest(searchRequest);
     }
 
@@ -44,14 +47,16 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> searchByTitle(String title) {
-        Request searchRequest = new Request(HttpMethod.GET.name(), indexName + Action.SEARCH.getType());
+        log.info("Search events by title {}", title);
+        Request searchRequest = new Request(HttpMethod.GET.name(), indexName + SEARCH_ENDPOINT);
         searchRequest.addParameter("q", "title:" + title);
         return performRequest(searchRequest);
     }
 
     @Override
     public List<Event> searchByTitleAndDateTimeAfter(String title, LocalDate date) {
-        Request searchRequest = new Request(HttpMethod.POST.name(), indexName + Action.SEARCH.getType());
+        log.info("Search events by title {} and date after {}", title, date);
+        Request searchRequest = new Request(HttpMethod.POST.name(), indexName + SEARCH_ENDPOINT);
         String queryBody = String.format(AppConstants.ADVANCED_QUERY, title, date);
         searchRequest.setJsonEntity(queryBody);
         return performRequest(searchRequest);

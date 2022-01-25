@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="Application" packages="com.tuanmhoang.elk">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd'T'HH:mm:ss.SSS} [%uuid app_name=elastic-data-rest app_version=0.0.1 hostname=localhost] %pid %c{1}: %m%n
+        </Property>
+        <property name="LOG_DIR" value="c:/tmp/elkstudy/logs" />
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <File name="JsonFile" fileName="${LOG_DIR}/app-info.json">
+            <JSONLayout complete="false" compact="true" eventEol="true"/>
+        </File>
+        <File name="PlainTextFile" fileName="${LOG_DIR}/app-info.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="PlainTextFile"/>
+            <AppenderRef ref="JsonFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

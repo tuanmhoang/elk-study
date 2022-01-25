@@ -28,7 +28,7 @@ services:
         ELK_VERSION: $ELK_VERSION
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,z
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,z
+#      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,z
     ports:
       - "5044:5044"
       - "5000:5000/tcp"
@@ -54,6 +54,41 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  filebeat:
+    user: root
+    container_name: filebeat
+    image: docker.elastic.co/beats/filebeat:$ELK_VERSION
+    links:
+      - logstash:logstash
+    depends_on:
+      - logstash
+    volumes:
+      - /var/run/docker.sock:/host_docker/docker.sock
+      - /var/lib/docker:/host_docker/var/lib/docker
+      - ./mylog:/usr/share/filebeat/mylog
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+    command: ["--strict.perms=false"]
+    depends_on:
+      - elasticsearch
+      - kibana
+    restart: on-failure
+    networks:
+      - elk    
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    stdin_open: true
+#    tty: true
+#    network_mode: bridge
+#    deploy:
+#      mode: global
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "50"
 
 networks:
   elk:

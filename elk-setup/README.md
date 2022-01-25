@@ -3,11 +3,15 @@ Study ELK stack
 
 This project follows a very nice template at https://github.com/deviantony/docker-elk
 
+For `filebeat` and `logstash` refer to https://github.com/gnokoheat/elk-with-filebeat-by-docker-compose 
+
 ## 
 
 ## Reference
 - [1] https://logz.io/blog/elk-stack-on-docker/
 - [2] https://github.com/deviantony/docker-elk
+- [3] https://github.com/gnokoheat/elk-with-filebeat-by-docker-compose
+- [4] https://discuss.elastic.co/t/configure-filebeats-on-docker-to-read-logs-in-widnows-directory-c-logsesb-log/277924
 
 ## Steps to do
 
@@ -296,3 +300,23 @@ To `get events with title Java and from 2022-01-02` try
 ```
 
 Reference: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+### Read file and analyze
+
+#### Import file for logstash and filebeat
+
+![image](https://user-images.githubusercontent.com/37680968/150907254-a5a82b6a-210c-482e-8fd6-45312655b128.png)
+
+![image](https://user-images.githubusercontent.com/37680968/150907363-55508f14-cf68-4415-a40d-8de9022c77fc.png)
+
+![image](https://user-images.githubusercontent.com/37680968/150907797-f2aa21c3-dfd8-4165-81ce-2ca8f8e78317.png)
+
+#### Config docker to read file from windows (my working machine)
+
+Reference: https://discuss.elastic.co/t/configure-filebeats-on-docker-to-read-logs-in-widnows-directory-c-logsesb-log/277924 
+
+
+
+## Notes
+
+Nice article: https://logz.io/blog/filebeat-vs-logstash/
